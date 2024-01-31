@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bda9pajlnbhaa6ibtbnm',
+        'USER': 'uqgmgzpu9p15ur21eddx',
+        'PASSWORD': 'yWitIg6qsdQ7jBJSjpkC4nlTdjG23V',
+        'HOST': 'bda9pajlnbhaa6ibtbnm-postgresql.services.clever-cloud.com',
+        'PORT': '50013',
     }
 }
 
