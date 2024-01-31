@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'attendance.apps.AttendnaceConfig',
+    'attendance.apps.AttendanceConfig',
     'crispy_forms',
     'crispy_bootstrap5'
 ]
