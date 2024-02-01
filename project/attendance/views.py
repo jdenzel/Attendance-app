@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from attendance.forms import RegistrationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from .models import TimeClock
+from django.utils import timezone
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -18,3 +20,12 @@ def sign_up(request):
         form = RegistrationForm()
 
     return render(request, 'registration/sign_up.html', {"form": form})
+
+@login_required(login_url="/login")
+def clock_in(request):
+    if request.method == 'POST':
+        time_clock = TimeClock(employee=request.user, role=request.POST.get('role'))
+        time_clock.save()
+        request.session['clocked_in'] = True
+        return redirect('clock_out')
+    return render(request, 'clocked_in.html')
