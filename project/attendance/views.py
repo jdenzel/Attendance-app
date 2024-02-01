@@ -28,7 +28,7 @@ def clock_in(request):
         time_clock.save() # Saves the Instance
         request.session['clocked_in'] = True # Sets clocked_in variable to True to tell indicate the user is clocked in
         return redirect('clock_out') # Changes view to clock out view
-    return render(request, 'clocked_in.html') # Renders clock in view if method is not POST
+    return render(request, 'attendance/clock_in.html') # Renders clock in view if method is not POST
 
 @login_required(login_url="/login")
 def clock_out(request):
@@ -37,4 +37,4 @@ def clock_out(request):
         time_clock.save() # Saves the Instance
         request.session['clocked_in'] = False # Sets clocked_in to False to indicate user is clocked out
         return redirect('clocked_in') # Changes view to clocked_in view
-    return render(request, 'clocked_out.html') # Renders clocked out view if method is not POST
+    return render(request, 'attendance/clock_out.html') # Renders clocked out view if method is not POST
