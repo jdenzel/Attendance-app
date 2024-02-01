@@ -1,0 +1,11 @@
+{% extends 'attendance/base.html' %} {% block title %}Clock Out{% endblock %}
+{% load crispy_forms_tags %} 
+{% block content %}
+<h2>Clock Out</h2>
+<p>Clocked in: {{ time_clock.clock_in_time }}</p><br>
+<p>Role: {{time_clock.role}}
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Clock Out">
+</form>
+    {% endblock %}
