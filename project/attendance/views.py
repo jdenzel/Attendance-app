@@ -32,9 +32,11 @@ def clock_in(request):
 
 @login_required(login_url="/login")
 def clock_out(request):
+    time_clock = TimeClock.objects.filter(employee=request.user).latest('clock_in_time') # Retrieves the latest TimeClock instance
     if request.method == 'POST':
-        time_clock = TimeClock.objects.filter(employee=request.user).latest('clock_in_time') # Retrieves the latest TimeClock instance
+        time_clock.clock_out_time = timezone.now() # Sets the clock_out_time to the current time
         time_clock.save() # Saves the Instance
         request.session['clocked_in'] = False # Sets clocked_in to False to indicate user is clocked out
-        return redirect('clocked_in') # Changes view to clocked_in view
-    return render(request, 'attendance/clock_out.html') # Renders clocked out view if method is not POST
+        return redirect('clock_in') # Changes view to clocked_in view
+    return render(request, 'attendance/clock_out.html', {'time_clock': time_clock}) # Renders clocked out view if method is not POST
+    # {'time_clock': time_clock} This passes the time_clock to the template
