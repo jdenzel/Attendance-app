@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %} {% block title %}Clock In{% endblock %}
+{% load crispy_forms_tags %} 
+{% block content %}
+<h2>Clock in</h2>
+<form method="post">
+    {% csrf_token %}{{form|crispy}}
+    <label for='role'>Role:</label><br>
+    <select name='role' id='role'>
+        <option value='scoreboard'>Scoreboard</option>
+        <option value="paperscorer">Paper Scorer</option>
+    </select><br>
+    <input type="submit" value="Clock in">
+</form>
+{% endblock %}
