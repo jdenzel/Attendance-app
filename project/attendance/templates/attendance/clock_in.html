@@ -1,7 +1,10 @@
 {% extends 'attendance/base.html' %} {% block title %}Clock In{% endblock %}
 {% load crispy_forms_tags %} 
 {% block content %}
+{% load tz %}
 <h2>Clock in</h2>
+<p>Date: {% now "d-m-Y" %}<p>
+<p>Time: {% now "H:i" %}
 <form method="post">
     {% csrf_token %}{{form|crispy}}
     <label for='role'>Role:</label><br>
