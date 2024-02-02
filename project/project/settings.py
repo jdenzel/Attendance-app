@@ -39,12 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'attendance.apps.AttendanceConfig',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'places'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+PLACES_MAPS_API_KEY='YourAwesomeUltraSecretKey'
+PLACES_MAP_WIDGET_HEIGHT=480
+PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
+PLACES_MARKER_OPTIONS='{"draggable": true}'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
