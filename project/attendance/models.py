@@ -19,6 +19,7 @@ class TimeClock(models.Model):
     clock_out_time = models.DateTimeField(null=True, blank=True)
     role = models.CharField(choices = ROLES, default='none')
 
+
     def clock_out(self):
         self.clock_out_time = timezone.localtime(timezone.now())
         self.save()
