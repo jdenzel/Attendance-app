@@ -44,3 +44,8 @@ def clock_out(request):
         return redirect('clock_in') # Changes view to clocked_in view
     return render(request, 'attendance/clock_out.html', {'time_clock': time_clock}) # Renders clocked out view if method is not POST
     # {'time_clock': time_clock} This passes the time_clock to the template
+
+@login_required(login_url="/login")
+def timesheet(request):
+    time_clock = TimeClock.objects.filter(employee=request.user).order_by('-clock_in_time')
+    return render(request, 'attendance.timesheet.html', {'time_clock':time_clock})
