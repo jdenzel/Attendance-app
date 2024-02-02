@@ -4,6 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .models import TimeClock
 from django.utils import timezone
+from places.fields import PlacesField
 
 # Create your views here.
 @login_required(login_url="/login")

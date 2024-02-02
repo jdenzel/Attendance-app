@@ -47,7 +47,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-PLACES_MAPS_API_KEY='YourAwesomeUltraSecretKey'
+PLACES_MAPS_API_KEY='AIzaSyDA6g8N9n7zamuzMybVqH_jE0XRes7--Ko'
 PLACES_MAP_WIDGET_HEIGHT=480
 PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
 PLACES_MARKER_OPTIONS='{"draggable": true}'
