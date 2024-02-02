@@ -47,5 +47,5 @@ def clock_out(request):
 
 @login_required(login_url="/login")
 def timesheet(request):
-    time_clock = TimeClock.objects.filter(employee=request.user).order_by('-clock_in_time')
-    return render(request, 'attendance.timesheet.html', {'time_clock':time_clock})
+    time_clocks = TimeClock.objects.filter(employee=request.user).order_by('-clock_in_time')
+    return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})

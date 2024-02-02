@@ -1,6 +1,26 @@
 {% extends 'attendance/base.html' %} {% block title %}Time Sheet{% endblock %}
 {% block content %}
 <h2>Time Sheet</h2>
-<table>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Employee</th>
+            <th scope="col">Date</th>
+            <th scope="col">Clock In Time</th>
+            <th scope="col">Clock Out Time</th>
+            <th scope="col">Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for time_clock in time_clocks %}
+        <tr>
+            <td>{{ time_clock.employee }}</td>
+            <td>{{ time_clock.date }}</td>
+            <td>{{ time_clock.clock_in_time }}</td>
+            <td>{{ time_clock.clock_out_time }}</td>
+            <td>{{ time_clock.get_role_display }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}
