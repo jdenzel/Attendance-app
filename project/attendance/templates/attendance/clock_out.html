@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Clock Out</h2>
 <p>Clocked in: {{ time_clock.clock_in_time }}</p><br>
-<p>Role: {{time_clock.role }}
+<p>Role: {{time_clock.get_role_display }}
 <form method="post">
     {% csrf_token %}
     <input type="submit" value="Clock Out">

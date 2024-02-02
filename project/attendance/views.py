@@ -23,6 +23,8 @@ def sign_up(request):
 
 @login_required(login_url="/login")
 def clock_in(request):
+    if request.session.get('clocked_in', False): # Checks if user is already clocked in
+        return redirect('clock_out') # Redirects to clock_out view if user is already clocked in
     if request.method == 'POST':
         time_clock = TimeClock(employee=request.user, role=request.POST.get('role')) # Creates a new TimeClock instance and requests the desired role of the currently logged in user
         time_clock.save() # Saves the Instance
@@ -32,6 +34,8 @@ def clock_in(request):
 
 @login_required(login_url="/login")
 def clock_out(request):
+    if not request.session.get('clocked_in', False): # Checks if user is not clocked in
+        return redirect('clock_in') # Redirects to clock_in view if user is not clocked in
     time_clock = TimeClock.objects.filter(employee=request.user).latest('clock_in_time') # Retrieves the latest TimeClock instance
     if request.method == 'POST':
         time_clock.clock_out_time = timezone.now() # Sets the clock_out_time to the current time
