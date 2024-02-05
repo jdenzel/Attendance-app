@@ -18,8 +18,8 @@
             <td>{{ time_clock.employee }}</td>
             <td>{{ time_clock.location }}</td>
             <td>{{ time_clock.date }}</td>
-            <td>{{ time_clock.clock_in_time }}</td>
-            <td>{{ time_clock.clock_out_time }}</td>
+            <td>{{ time_clock.clock_in_time|date:"P" }}</td>
+            <td>{{ time_clock.clock_out_time|date:"P" }}</td>
             <td>{{ time_clock.get_role_display }}</td>
         </tr>
         {% endfor %}

@@ -14,38 +14,60 @@ def home(request):
 def sign_up(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        if form.is_valid(): # Checks if all form fields is correct
-            user = form.save() # Creates new user and saves into database then assigns it to user variable
-            login(request, user) # Logs in newly created user
+        if form.is_valid(): 
+            user = form.save() 
+            login(request, user) 
     else:
         form = RegistrationForm()
 
     return render(request, 'registration/sign_up.html', {"form": form})
 
+    # Checks if all form fields is correct
+    # Creates new user and saves into database then assigns it to user variable
+    # Logs in newly created user
+
 @login_required(login_url="/login")
 def clock_in(request):
-    if request.session.get('clocked_in', False): # Checks if user is already clocked in
-        return redirect('clock_out') # Redirects to clock_out view if user is already clocked in
+    if request.session.get('clocked_in', False): 
+        return redirect('clock_out') 
     if request.method == 'POST':
-        time_clock = TimeClock(employee=request.user, role=request.POST.get('role'), location=request.POST.get('location')) # Creates a new TimeClock instance and requests the desired role and location of the currently logged in user
-        time_clock.save() # Saves the Instance
+        time_clock = TimeClock(employee=request.user, role=request.POST.get('role'), location=request.POST.get('location')) 
+        time_clock.save() 
         print(time_clock.location)
-        request.session['clocked_in'] = True # Sets clocked_in variable to True to tell indicate the user is clocked in
-        return redirect('clock_out') # Changes view to clock out view
-    return render(request, 'attendance/clock_in.html') # Renders clock in view if method is not POST
+        request.session['clocked_in'] = True 
+        return redirect('clock_out') 
+    return render(request, 'attendance/clock_in.html') 
+
+    # Checks if user is already clocked in
+    # Redirects to clock_out view if user is already clocked in
+    # Creates a new TimeClock instance and requests the desired role and location of the currently logged in user
+    # Saves the Instance
+    # Sets clocked_in variable to True to tell indicate the user is clocked in
+    # Changes view to clock out view
+    # Renders clock in view if method is not POST
+
 
 @login_required(login_url="/login")
 def clock_out(request):
-    if not request.session.get('clocked_in', False): # Checks if user is not clocked in
-        return redirect('clock_in') # Redirects to clock_in view if user is not clocked in
-    time_clock = TimeClock.objects.filter(employee=request.user).latest('clock_in_time') # Retrieves the latest TimeClock instance
+    if not request.session.get('clocked_in', False): 
+        return redirect('clock_in') 
+    time_clock = TimeClock.objects.filter(employee=request.user).latest('clock_in_time') 
     if request.method == 'POST':
-        time_clock.clock_out_time = timezone.now() # Sets the clock_out_time to the current time
-        time_clock.save() # Saves the Instance
-        request.session['clocked_in'] = False # Sets clocked_in to False to indicate user is clocked out
-        return redirect('clock_in') # Changes view to clocked_in view
-    return render(request, 'attendance/clock_out.html', {'time_clock': time_clock}) # Renders clocked out view if method is not POST
-    # {'time_clock': time_clock} This passes the time_clock to the template
+        time_clock.clock_out_time = timezone.now() 
+        time_clock.save() 
+        request.session['clocked_in'] = False 
+        return redirect('clock_in') 
+    return render(request, 'attendance/clock_out.html', {'time_clock': time_clock})
+
+    # Checks if user is not clocked in
+    # Redirects to clock_in view if user is not clocked in
+    # Retrieves the latest TimeClock instance
+    # Sets the clock_out_time to the current time
+    # Saves the Instance
+    # Sets clocked_in to False to indicate user is clocked out
+    # Changes view to clocked_in view
+    # Renders clocked out view if method is not POST
+    # {'time_clock': time_clock} - This passes the time_clock to the template
 
 @login_required(login_url="/login")
 def timesheet(request):
