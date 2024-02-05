@@ -18,7 +18,7 @@ class TimeClock(models.Model):
     date = models.DateField(auto_now_add=True)
     clock_in_time = models.DateTimeField(auto_now_add=True)
     clock_out_time = models.DateTimeField(null=True, blank=True)
-    location = PlacesField(blank=True, null=True)
+    location = models.CharField(default='none',blank=True)
     role = models.CharField(choices = ROLES, default='none')
 
 

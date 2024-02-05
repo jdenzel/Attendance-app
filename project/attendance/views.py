@@ -27,8 +27,9 @@ def clock_in(request):
     if request.session.get('clocked_in', False): # Checks if user is already clocked in
         return redirect('clock_out') # Redirects to clock_out view if user is already clocked in
     if request.method == 'POST':
-        time_clock = TimeClock(employee=request.user, role=request.POST.get('role'), location=request.POST.get('location')) # Creates a new TimeClock instance and requests the desired role of the currently logged in user
+        time_clock = TimeClock(employee=request.user, role=request.POST.get('role'), location=request.POST.get('location')) # Creates a new TimeClock instance and requests the desired role and location of the currently logged in user
         time_clock.save() # Saves the Instance
+        print(time_clock.location)
         request.session['clocked_in'] = True # Sets clocked_in variable to True to tell indicate the user is clocked in
         return redirect('clock_out') # Changes view to clock out view
     return render(request, 'attendance/clock_in.html') # Renders clock in view if method is not POST
