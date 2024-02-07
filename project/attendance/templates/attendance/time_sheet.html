@@ -1,6 +1,9 @@
 {% extends 'attendance/base.html' %} {% block title %}Time Sheet{% endblock %}
 {% block content %}
 <h2>Time Sheet</h2>
+<form>
+    <input type="text" id="search" placeholder="Filter">
+</form>
 <table class="table">
     <thead class="thead-dark">
         <tr>
