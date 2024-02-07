@@ -92,5 +92,12 @@ def timesheet(request):
         ).order_by('-clock_in_time')
         return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})
     
+@login_required
+class UpdateTimeClock(UpdateView):
+    model = TimeClock
+    fields = ['location', 'date', 'clock_in_time', 'clock_out_time', 'role']
+    template_name = 'attendance/time_clock_update.html'
+    success_url = reverse_lazy('time_sheet')
+
     
     
