@@ -73,8 +73,13 @@ def clock_out(request):
 
 @login_required(login_url="/login")
 def timesheet(request):
+    query = request.GET.get('query', '')
     if not request.user.is_staff:
-        time_clocks = TimeClock.objects.filter(employee=request.user).order_by('-clock_in_time')
+        time_clocks = TimeClock.objects.filter(
+            Q(locations__icontains=query) | 
+            Q(role__icontains=query) |
+            Q(date__icontains=query),
+            employee=request.user).order_by('-clock_in_time')
         return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})
     else:
         time_clocks = TimeClock.objects.all().order_by('-clock_in_time')
