@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from attendance.forms import RegistrationForm
 from django.contrib.auth import login, logout, authenticate
@@ -8,6 +9,7 @@ from places.fields import PlacesField
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -93,11 +95,17 @@ def timesheet(request):
         return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})
     
 @login_required
-class UpdateTimeClock(UpdateView):
+class UpdateTimeClock(UserPassesTestMixin, UpdateView):
     model = TimeClock
     fields = ['location', 'date', 'clock_in_time', 'clock_out_time', 'role']
     template_name = 'attendance/time_clock_update.html'
     success_url = reverse_lazy('time_sheet')
+
+    def test_func(self):
+        return self.request.user.is_staff
+    
+    def handle_no_permission(self):
+        return HttpResponseRedirect(reverse_lazy('home'))
 
     
     
