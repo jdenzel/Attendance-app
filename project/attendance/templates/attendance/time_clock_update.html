@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block title %}Update Time Clock{% endblock %}
+{% block content %}
+<h2>Edit Time Clock</h2>
+{% block content %}
+  <h2>Edit time clock</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="PUT">
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+  </form>
+{% endblock %}
+
