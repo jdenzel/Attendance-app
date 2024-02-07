@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from attendance.forms import RegistrationForm
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import TimeClock
 from django.utils import timezone
 from places.fields import PlacesField
@@ -17,6 +17,7 @@ def sign_up(request):
         if form.is_valid(): 
             user = form.save() 
             login(request, user) 
+            return redirect('/home')
     else:
         form = RegistrationForm()
 
@@ -71,5 +72,9 @@ def clock_out(request):
 
 @login_required(login_url="/login")
 def timesheet(request):
-    time_clocks = TimeClock.objects.filter(employee=request.user).order_by('-clock_in_time')
-    return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})
+    if not request.user.is_staff:
+        time_clocks = TimeClock.objects.filter(employee=request.user).order_by('-clock_in_time')
+        return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})
+    else:
+        time_clocks = TimeClock.objects.all().order_by('-clock_in_time')
+        return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})

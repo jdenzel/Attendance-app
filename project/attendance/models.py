@@ -27,4 +27,4 @@ class TimeClock(models.Model):
         self.save()
 
     def __str__(self):
-        return self.employee + '\n' + self.date + self.clock_in_time + '\n' + self.clock_out_time + '\n' + self.role
+        return str(self.employee) + '\n' + str(self.date) + str(self.clock_in_time) + '\n' + str(self.clock_out_time) + '\n' + str(self.location) + '\n' + str(self.role)
