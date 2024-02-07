@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from .models import TimeClock
 from django.utils import timezone
 from places.fields import PlacesField
+from django.db.models import Q
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -78,3 +79,4 @@ def timesheet(request):
     else:
         time_clocks = TimeClock.objects.all().order_by('-clock_in_time')
         return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})
+    
