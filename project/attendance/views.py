@@ -6,6 +6,8 @@ from .models import TimeClock
 from django.utils import timezone
 from places.fields import PlacesField
 from django.db.models import Q
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -89,4 +91,6 @@ def timesheet(request):
             Q(date__icontains=query),
         ).order_by('-clock_in_time')
         return render(request, 'attendance/time_sheet.html', {'time_clocks':time_clocks})
+    
+    
     
